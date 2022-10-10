@@ -1,0 +1,131 @@
+.formDiv {
+  padding-block: 1.5rem;
+  background: url(../../assets/bgMOBILE.png) repeat-y;
+  background-size: 100%;
+  background-position: 0 -20px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--clr-grey) 0px 0px 8px 1px;  
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: left;
+  padding: 1.75rem 2rem;
+  margin: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.backBtn {
+  align-self: flex-start;
+  padding: .45rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: none;
+  transition: 0.1s;
+  height: 30px;
+  width: 30px;
+}
+.backBtn:hover {
+  background-color: var(--clr-light-grey);
+}
+
+.title {
+  margin-block: .75rem;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin-bottom: .5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.obligatory {
+  color: var(--clr-main);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.error {
+  color: red;
+  font-size: .75rem;
+}
+
+.category {
+  margin-top: .75rem;
+}
+
+.form input,
+.form select,
+.form textarea {
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid var(--clr-light-grey);
+  padding: .25rem .75rem;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.dietContainer {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: .25rem;
+}
+
+.item {
+  border: 1px solid var(--clr-main);
+  border-radius: 4px;
+  padding: .25rem .75rem;
+  margin: 2px;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: var(--clr-main);
+  padding-left: 8px;
+  cursor: pointer;
+}
+
+.submitBtn {
+  margin-top: 1.25rem;
+  border: 1px solid var(--clr-main);
+  border-radius: 8px;
+  background-color: var(--clr-main);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  padding: .75rem 1rem;
+  cursor: pointer;
+}
+.submitBtn:hover {
+  background-color: white;
+  color: var(--clr-main);
+}
+
+@media (min-width:540px){
+  .formContainer {
+    margin-inline: auto;
+    padding: 2.25rem 2.5rem;
+  }
+}
+
+@media (min-width:670px) {
+  .formDiv {
+    background: url(../../assets/bgDESKTOP.png) repeat-y;
+    background-size: 100%;
+    background-position: 0 -20px;
+  }
+}

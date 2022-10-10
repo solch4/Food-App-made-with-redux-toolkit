@@ -1,0 +1,12 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.img {
+  align-self: center;
+  margin-top: 1rem;
+  width: 80%;
+  max-width: 250px;
+}

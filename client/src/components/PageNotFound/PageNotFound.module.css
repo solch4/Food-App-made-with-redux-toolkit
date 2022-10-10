@@ -1,0 +1,59 @@
+.container {
+  padding-top: 1.5rem;
+  min-height: 100vh;
+  background: url(../../assets/bgMOBILE.png) repeat-y;
+  background-size: 100%;
+  background-position: 0 -20px;
+}
+
+.body {
+  max-width: 600px;
+  padding: 1.75rem 2rem;
+  margin: 0 1rem;
+  box-shadow: var(--clr-grey) 0px 0px 8px 1px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.95);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img {
+  margin-block: 2rem 3rem;
+  border-radius: 4px;
+  width: 300px;
+  filter: hue-rotate(120deg) drop-shadow(1px 1px 2px var(--clr-light-grey));
+}
+
+.btn {
+  background-color: var(--clr-main);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: .1s;
+  font-size: 18px;
+  color: white;
+}
+
+.btn:hover {
+  background-color: var(--clr-dark-main);
+}
+
+@media (min-width: 620px) {
+  .body {
+    margin-inline: auto;
+  }
+  .img {
+    margin-block: 3rem 4rem;
+  }
+}
+
+@media (min-width:670px) {
+  .container {
+    background: url(../../assets/bgDESKTOP.png) repeat-y;
+    background-size: 100%;
+    background-position: 0 -20px;
+  }
+}

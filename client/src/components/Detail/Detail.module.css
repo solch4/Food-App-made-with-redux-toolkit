@@ -1,0 +1,128 @@
+.detailDiv {
+  padding-block: 1.5rem;
+  background: url(../../assets/bgMOBILE.png) repeat-y;
+  background-size: 100%;
+  background-position: 0 -20px;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--clr-grey) 0px 0px 8px 1px;
+  border-radius: 8px;
+  max-width: 700px;
+  text-align: left;
+  padding: 1.75rem 2rem;
+  margin: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.backBtn {
+  align-self: flex-start;
+  padding: .45rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: none;
+  transition: 0.1s;
+  height: 30px;
+  width: 30px;
+}
+.backBtn:hover {
+  background-color: var(--clr-light-grey);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  display: inline-flex;
+  position: relative;
+  margin-bottom: .75rem;
+  font-size: 1.75rem;
+}
+
+.subtitle {
+  margin-top: .5em;
+}
+
+.img {
+  border-radius: 4px;
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+.p {
+  margin: .25em 0;
+}
+
+.imgFavBtnContainer {
+  position: relative;
+  margin-block: 1.25rem 1.5rem;
+}
+
+.favBtn {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 6px 0 0 0;
+  font-size: 2.25rem;
+  width: 1.1em;
+  height: 1.1em;
+  line-height: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.category {
+  font-weight: 600;
+}
+
+.deleteEditBtnsContainer {
+  margin-top: .5rem;
+  display: flex;
+  gap: .75rem;
+}
+
+.deleteBtn, 
+.editBtn {
+  background-color:  var(--clr-main);
+  border-radius: 4px;
+  border: none;
+  color: white;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  transition: .1s;
+  width: 50%;
+  user-select: none;
+}
+.deleteBtn:hover, 
+.editBtn:hover {
+  background-color: var(--clr-dark-main);
+}
+
+@media (min-width:670px) {
+  .detailDiv {
+    background: url(../../assets/bgDESKTOP.png) repeat-y;
+    background-size: 100%;
+    background-position: 0 -20px;
+  }
+}
+
+@media(min-width:730px) {
+  .container {
+    margin-inline: auto;
+    padding: 2.25rem 2.5rem;
+  }
+  .deleteBtn, 
+  .editBtn {
+    padding: 0.5rem 1.25rem;
+  }
+  .deleteEditBtnsContainer {
+    margin-top: 1rem;  
+  }
+}

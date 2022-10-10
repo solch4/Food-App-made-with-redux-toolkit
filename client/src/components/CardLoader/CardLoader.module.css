@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem .5rem;
+}
+
+.card {
+  height: 340px;
+  width: 270px;
+  background-color: white;
+  box-shadow: darkgrey 0px 0px 4px;
+  border-radius: 8px;
+  margin: .75rem;
+  cursor: wait;
+}
+
+.img {
+  height: 200px;
+  width: 100%;
+  
+  background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+  border-radius: 8px 8px 0 0;
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: load89234 2s infinite;
+}
+
+.body {
+  padding: 1rem 1.25rem;
+}
+
+.title {
+  background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: load89234 2s infinite;
+  
+  height: 1.5rem;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.diet {
+  background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: load89234 2s infinite;
+
+  height: .75rem;
+  width: 90%;
+  border-radius: 2px;
+  margin-top: .5em;
+}
+
+@media (min-width: 600px) {
+  .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 850px) {
+  .container {
+    position: absolute;
+    right: 0;
+    width: 70%;
+  }
+}
+
+@keyframes load89234 {
+  100% {
+    background-position: -100% 0;
+  }
+}

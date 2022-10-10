@@ -1,0 +1,52 @@
+.landingPage {
+  height: 100vh;
+  background-image: url(../../assets/2.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.goHomeBtn {
+  position: relative;
+  top: 50vh;
+  background-color: white;
+  color: var(--clr-main);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-radius: 8px;
+  border: none;
+  padding: .75rem 1.5rem;
+  cursor: pointer;
+  transition: .15s;
+  animation: start .75s;
+  
+  display: inline-flex;
+  align-items: center;
+}
+.goHomeBtn:hover {
+  background-color: var(--clr-black);
+  letter-spacing: 0.2em;
+  transform: scale(1.1, 1.1);
+}
+
+.img {
+  height: 1em;
+  margin-left: .75em;
+}
+
+@keyframes start {
+  0% {
+    transform: translateY(1.25rem);
+    opacity: .1;
+  }
+}
+
+@media (min-width:550px) {
+  .landingPage {
+    background-image: url(../../assets/1.jpg);
+    background-position: left;
+  }
+}
