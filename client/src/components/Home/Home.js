@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { getRecipesAsync } from '../../features/recipes/recipesSlice';
 import { getDietsAsync } from '../../features/diets/dietsSlice';
 import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
-import { saveScrollY } from '../../features/ux/uxSlice';
-
+import { saveScrollY, setFilterSelectValue, setSortSelectValue } from '../../features/ux/uxSlice';
 import Filter from '../Filter/Filter';
 import Sort from '../Sort/Sort';
 import Pagination from '../Pagination/Pagination';
@@ -46,6 +45,8 @@ function Home() {
     dispatch(setMinPageNumber(0))
     dispatch(setMaxPageNumber(5)  )
     dispatch(getRecipesAsync())
+    dispatch(setSortSelectValue('DEFAULT'))
+    dispatch(setFilterSelectValue('DEFAULT'))
 
     //scrolleo al top de la pág
     dispatch(saveScrollY(0))
