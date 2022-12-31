@@ -1,11 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterByDiet, setActualPage, setMaxPageNumber, setMinPageNumber } from '../../actions/actions';
+import { filterByDiet } from '../../features/recipes/recipesSlice';
+import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
+
 import { filterContainer, title } from './Filter.module.css'
 
 function Filter() {
   const dispatch = useDispatch()
-  const diets = useSelector(state => state.diets)
+  const { diets } = useSelector(state => state.diets)
 
   const handleFilterByDiet = (e) => {
     dispatch(setActualPage(1))

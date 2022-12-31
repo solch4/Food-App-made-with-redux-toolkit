@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearDetail, deleteRecipe, getDetail } from '../../actions/actions';
+import { getDetailAsync, clearDetail, deleteRecipeAsync } from '../../features/recipes/recipesSlice';
 import backArrow from '../../assets/back-arrow.svg'
 import Detail404 from '../Detail404/Detail404';
 import { detailDiv, container, backBtn, body, img, title, category, subtitle, deleteEditBtnsContainer, deleteBtn, editBtn, p, imgFavBtnContainer, favBtn } from './Detail.module.css'
@@ -11,7 +11,7 @@ function Detail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
-  const detail = useSelector(state => state.detail)
+  const { detail } = useSelector(state => state.recipes)
   const { image, name, diets, healthScore, summary, instructions, dishTypes, createdInDB } = detail
   const [isFavorite, setIsFavorite] = useState(JSON.parse(localStorage.getItem('IDs'))?.includes(detail.id))
   
@@ -19,7 +19,7 @@ function Detail() {
 
   const handleDeleteRecipe = () => {
     if (!window.confirm(`Are you sure you want to delete the ${name} recipe? \nYou won't be able to revert this.`)) return
-    dispatch(deleteRecipe(id))
+    dispatch(deleteRecipeAsync(id))
     navigate(-1)
   }
 
@@ -60,7 +60,7 @@ function Detail() {
 
   //component did mount/update
   useEffect(() => {
-    dispatch(getDetail(id))
+    dispatch(getDetailAsync(id))
     setIsFavorite(JSON.parse(localStorage.getItem('IDs'))?.includes(detail.id))
   }, [dispatch, id, detail.id])
 

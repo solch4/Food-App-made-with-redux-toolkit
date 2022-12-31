@@ -8,7 +8,7 @@ import { container, noFavs } from './Favorites.module.css'
 
 function Favorites() {
   const storage = JSON.parse(localStorage.getItem("favorites"));
-  const scrollY = useSelector(state => state.scrollY)
+  const { scrollY } = useSelector(state => state.ux)
 
   useEffect(()=> {
     //para volver a la misma parte de la pág q quedó el usuario antes de ver el detail

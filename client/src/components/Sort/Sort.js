@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setActualPage, setMaxPageNumber, setMinPageNumber, sortByHealthScore, sortByName } from '../../actions/actions';
+import { sortByHealthScore, sortByName } from '../../features/recipes/recipesSlice';
+import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { sortContainer, title } from './Sort.module.css'
 
 function Sort({ setSort }) {

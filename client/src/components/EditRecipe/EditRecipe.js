@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { editRecipe, getDiets, getRecipes } from '../../actions/actions';
+import { getRecipesAsync, editRecipeAsync } from '../../features/recipes/recipesSlice';
+import { getDietsAsync } from '../../features/diets/dietsSlice';
+
 import backArrow from '../../assets/back-arrow.svg'
 import { formDiv, formContainer, backBtn, title, form, category, error, dietContainer, item, deleteBtn, submitBtn } from './EditRecipe.module.css'
 
@@ -28,14 +30,14 @@ function validateText ({ name, summary, healthScore, image }, existingNames) {
 // component
 function EditRecipe () {
   //me traigo las recipes para ver si el name ingresado del usuario ya existe. guardo todos los names en minús en un obj
-  const allRecipes = useSelector(state => state.allRecipes)
+  const { allRecipes } = useSelector(state => state.recipes)
   const existingNames = {}
   for (const recipe of allRecipes) existingNames[recipe.name.toLowerCase()] = true
 
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const diets = useSelector(state => state.diets)
+  const { diets } = useSelector(state => state.diets)
   const [selectedDiet, setSelectedDiet] = useState([])
   const [err, setErr] = useState({})
   const [input, setInput] = useState({
@@ -79,14 +81,14 @@ function EditRecipe () {
     if(selectedDiet.length) dataEditRecipe.diets = selectedDiet
 
     // console.log('dataEditRecipe',dataEditRecipe);
-    dispatch(editRecipe(dataEditRecipe, id))
+    dispatch(editRecipeAsync(dataEditRecipe, id))
     navigate('/home')
   }
 
   useEffect(() => {
-    dispatch(getDiets())
+    dispatch(getDietsAsync())
     // si el estado allRecipes está vacío lo lleno, sino no
-    !allRecipes.length && dispatch(getRecipes()) 
+    !allRecipes.length && dispatch(getRecipesAsync()) 
   }, [dispatch, allRecipes])
 
   return (

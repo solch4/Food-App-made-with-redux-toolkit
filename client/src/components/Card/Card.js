@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
-import { saveScrollY } from '../../actions/actions';
+import { saveScrollY } from '../../features/ux/uxSlice';
 import { imgHealthSContainer, img, card, body, title, healthS, diet } from './Card.module.css'
 
 function Card ({ id, image, name, diets, healthScore, createdInDB }) {

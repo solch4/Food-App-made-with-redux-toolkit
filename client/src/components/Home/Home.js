@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getDiets, getRecipes, saveScrollY, setActualPage, setMaxPageNumber, setMinPageNumber } from '../../actions/actions';
+import { getRecipesAsync } from '../../features/recipes/recipesSlice';
+import { getDietsAsync } from '../../features/diets/dietsSlice';
+import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
+import { saveScrollY } from '../../features/ux/uxSlice';
+
 import Filter from '../Filter/Filter';
 import Sort from '../Sort/Sort';
 import Pagination from '../Pagination/Pagination';
@@ -11,20 +15,18 @@ import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import { App, homeContainer, menuContainer, sortFilter, refreshBtn, createRecipe } from './Home.module.css'
 
 function Home() {
-  const scrollY = useSelector(state => state.scrollY)
-  const recipes = useSelector(state => state.recipes)
+  const { scrollY } = useSelector(state => state.ux)
+  const { recipes } = useSelector(state => state.recipes)
   const dispatch = useDispatch()
   const [, setSort] = useState('') //este state sólo sirve para re-renderizar la pág cuando hacemos un sort
 
   //pagination
-  const actualPage = useSelector(state => state.actualPage)
+  //minPageNumber y maxPageNumber son para hacer el paginado más tikito y que quede lindo, uso ambos para hacer un slice y renderizar sólo ese pedazo
+  const { actualPage, minPageNumber, maxPageNumber } = useSelector(state => state.pagination)
   const recipesPerPage = 9
   const indexOfLastRecipe = actualPage * recipesPerPage //last recipe per page
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage //1st recipe per page
   const actualRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
-  //minPageNumber y maxPageNumber son para hacer el paginado más tikito y que quede lindo, uso ambos para hacer un slice y renderizar sólo ese pedazo
-  const minPageNumber = useSelector(state => state.minPageNumber)
-  const maxPageNumber = useSelector(state => state.maxPageNumber)
 
   const pages = (pageNumber) => {
     //al cambiar de pág scrolleo hasta el inicio
@@ -43,7 +45,7 @@ function Home() {
     dispatch(setActualPage(1))
     dispatch(setMinPageNumber(0))
     dispatch(setMaxPageNumber(5)  )
-    dispatch(getRecipes())
+    dispatch(getRecipesAsync())
 
     //scrolleo al top de la pág
     dispatch(saveScrollY(0))
@@ -51,8 +53,8 @@ function Home() {
 
   useEffect(() => {
     //dispacho la action solo si mi estado está vacío (cuando entro x 1ra vez a la pag)
-    !recipes.length && dispatch(getRecipes())
-    dispatch(getDiets())
+    !recipes.length && dispatch(getRecipesAsync())
+    dispatch(getDietsAsync())
 
     //para volver a la misma parte de la pág q quedó el usuario antes de ver el detail
     window.scrollTo(0, scrollY)

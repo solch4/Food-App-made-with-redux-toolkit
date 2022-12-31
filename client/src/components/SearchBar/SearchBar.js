@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { saveScrollY, searchByHS, searchByName, setActualPage, setMaxPageNumber, setMinPageNumber } from '../../actions/actions';
+import { saveScrollY } from '../../features/ux/uxSlice';
+import { searchByNameAsync, searchByHSAsync } from '../../features/recipes/recipesSlice';
+import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { searchBar, input, btn } from './SearchBar.module.css'
 
 function SearchBar() {
@@ -14,7 +16,9 @@ function SearchBar() {
     if (!searchInput.trim()) return
 
     //si el input es un núm busco x healthscore, sino por name
-    !isNaN(searchInput.trim()) ? dispatch(searchByHS(searchInput.trim())) : dispatch(searchByName(searchInput.trim()))
+    !isNaN(searchInput.trim())
+      ? dispatch(searchByHSAsync(searchInput.trim()))
+      : dispatch(searchByNameAsync(searchInput.trim()));
 
     dispatch(setActualPage(1))
     dispatch(setMinPageNumber(0))
