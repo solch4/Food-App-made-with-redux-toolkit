@@ -109,6 +109,7 @@ textarea {
   letter-spacing: 0.15em;
   padding: .75rem 1rem;
   cursor: pointer;
+  transition: .2s;
 }
 .submitBtn:hover {
   background-color: white;

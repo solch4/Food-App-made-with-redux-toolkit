@@ -81,7 +81,7 @@ function CreateRecipe () {
     const newRecipe = {
       name: input.name.trim(),
       summary: input.summary.trim(),
-      healthScore: input.healthScore ? input.healthScore : null,
+      healthScore: input.healthScore ? Math.floor(input.healthScore) : null,
       instructions: input.instructions.trim(),
       image: input.image.trim(),
       diets: selectedDiet
