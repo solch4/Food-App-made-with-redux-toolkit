@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import leftArrow from '../../assets/arrow-left.svg'
 import rightArrow from '../../assets/arrow-right.svg'
-import { container, pageNumber, pageNumberACTIVE, pageNumberDISABLED, arrow } from "./Pagination.module.css";
+import { pagination, active, disabled, arrow } from "./Pagination.module.css";
 
 function Pagination({ recipesPerPage, pages }) {
   const { recipes } = useSelector(state => state.recipes)
@@ -19,22 +19,22 @@ function Pagination({ recipesPerPage, pages }) {
   const handleNext = () => (actualPage!==arrPageNumbers.length) && pages(actualPage + 1)
 
   return (
-    <ul className={container}>
+    <div className={pagination}>
       {/* prev */}
-      <li className={actualPage === 1 ? pageNumberDISABLED : pageNumber} onClick={handlePrev}>
-        <img className={arrow} src={leftArrow} alt='«'/>
-      </li>
+      <button className={actualPage === 1 ? disabled : null} onClick={handlePrev}>
+        <img className={arrow} src={leftArrow} alt='Prev' />
+      </button>
       
       {/* page n */}
       {arrPageNumbers.slice(minPageNumber, maxPageNumber).map((n) => 
-        <li className={actualPage === n ? pageNumberACTIVE : pageNumber} onClick={() => pages(n)} key={n}>{n}</li>
+        <button className={actualPage === n ? active : null} onClick={() => pages(n)} key={n}>{n}</button>
       )}
       
       {/* next */}
-      <li className={actualPage === arrPageNumbers.length ? pageNumberDISABLED : pageNumber} onClick={handleNext}>
-        <img className={arrow} src={rightArrow} alt='»'/>
-      </li>
-    </ul>
+      <button className={actualPage === arrPageNumbers.length ? disabled : null} onClick={handleNext}>
+        <img className={arrow} src={rightArrow} alt='Next' />
+      </button>
+    </div>
   );
 }
 
