@@ -5,9 +5,9 @@
   background-color: white;
   box-shadow: var(--clr-light-grey) 0px 1px 4px 0px;
   border-radius: 8px;
-  width: 270px;
-  margin: .75rem;
-  transition: 0.2s ease-out;
+  width: clamp(280px, 90%, 350px);
+  margin: 0 auto;
+  transition: 0.1s ease-out;
 }
 .card:hover {
   box-shadow: var(--clr-light-grey) 0px 1px 8px 0px;
@@ -46,4 +46,10 @@
   color: var(--clr-dark-grey);
   font-size: .75rem;
   margin-top: .75em;
+}
+
+@media (min-width: 850px) {
+  .card {
+    width: clamp(280px, 100%, 400px);
+  }
 }
