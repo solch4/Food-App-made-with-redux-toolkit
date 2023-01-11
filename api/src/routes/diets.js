@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
   })
 
   const allDiets = await Diet.findAll()
-  res.status(200).send(allDiets)
+  res.status(200).json(allDiets)
 })
 
 

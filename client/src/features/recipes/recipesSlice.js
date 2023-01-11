@@ -67,21 +67,22 @@ export const recipesSlice = createSlice({
     clearDetail: (state, action) => {
       state.detail = [];
     },
-    // habría q cambiar la respuesta del back para q esto funcione
-    // createRecipe: (state, action) => {
-    //   enviaría la nueva receta creada y la agregaría al toke
-    //   state.allRecipes.push(action.payload);
-    // },
-    // deleteRecipe: (state, action) => {
-    //   haría un filter para borrar la receta del front
-    //   const filteredRecipes = etc
-    //   state.allRecipes = filteredRecipes;
-    //   state.recipes = filteredRecipes;
-    // },
-    // editRecipe: (state, action) => {
-    //   state.allRecipes = action.payload;
-    //   state.recipes = action.payload;
-    // },
+    createRecipe: (state, action) => {
+      state.allRecipes.push(action.payload);
+      state.recipes = state.allRecipes
+    },
+    deleteRecipe: (state, action) => {
+      const recipesFiltered = state.allRecipes.filter(r => r.id !== action.payload)
+      state.allRecipes = recipesFiltered;
+      state.recipes = recipesFiltered;
+    },
+    editRecipe: (state, action) => {
+      const allRecipesCopy = state.allRecipes
+      const index = allRecipesCopy.findIndex(r => r.id === action.payload.id)
+      allRecipesCopy.splice(index, 1, action.payload)
+      state.allRecipes = allRecipesCopy;
+      state.recipes = allRecipesCopy;
+    },
   },
 });
 
@@ -128,9 +129,9 @@ export function getDetailAsync (id) {
 export function createRecipeAsync (newRecipe) {
   return async function (dispatch) {
     try {
-      const res = await axios.post(`${baseUrl}/recipes`, newRecipe)
-      alert(res.data)
-      // dispatch(createRecipe(res.data))
+      const { data } = await axios.post(`${baseUrl}/recipes`, newRecipe)
+      alert(data.message)
+      dispatch(createRecipe(data.newRecipe))
     } catch (e) {
       alert(e.response.data)
     }
@@ -140,9 +141,9 @@ export function createRecipeAsync (newRecipe) {
 export function deleteRecipeAsync (id) {
   return async function (dispatch) {
     try {
-      const res = await axios.delete(`${baseUrl}/recipes/${id}`)
-      alert(res.data)
-      // dispatch(deleteRecipe(res.data))
+      const { data } = await axios.delete(`${baseUrl}/recipes/${id}`)
+      alert(data.message)
+      dispatch(deleteRecipe(data.id))
     } catch (e) {
       alert(e.response.data)
     }
@@ -152,9 +153,9 @@ export function deleteRecipeAsync (id) {
 export function editRecipeAsync (payload, id) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`${baseUrl}/recipes/${id}/edit`, payload)
-      alert(res.data)
-      // dispatch(editRecipe(res.data))
+      const { data } = await axios.put(`${baseUrl}/recipes/${id}/edit`, payload)
+      alert(data.message)
+      dispatch(editRecipe(data.editedRecipe))
     } catch (e) {
       alert(e.response.data)
     }
@@ -170,9 +171,9 @@ export const {
   sortByHealthScore,
   getDetail,
   clearDetail,
-  // createRecipe,
-  // deleteRecipe,
-  // editRecipe,
+  createRecipe,
+  deleteRecipe,
+  editRecipe,
 } = recipesSlice.actions;
 
 export default recipesSlice.reducer;
