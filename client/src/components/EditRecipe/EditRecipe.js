@@ -76,7 +76,7 @@ function EditRecipe () {
     if(input.name.trim()) dataEditRecipe.name = input.name.trim()
     if(input.summary.trim()) dataEditRecipe.summary = input.summary.trim()
     if(input.healthScore) dataEditRecipe.healthScore = Math.floor(input.healthScore)
-    if(input.instructions.trim()) dataEditRecipe.instructions = input.instructions.trim()
+    if(input.instructions.trim()) dataEditRecipe.instructions = [input.instructions.trim()]
     if(input.image.trim()) dataEditRecipe.image = input.image.trim()
     if(selectedDiet.length) dataEditRecipe.diets = selectedDiet
 

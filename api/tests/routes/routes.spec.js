@@ -19,13 +19,15 @@ const recipe2 = {
   name: "Cupcakes",
   summary: `Bake these easy vanilla cupcakes in just 35 minutes. Perfect for birthdays, picnics or whenever you fancy a sweet treat, they're sure to be a crowd-pleaser.`,
   healthScore: 48,
-  instructions: `Heat oven to 180C/160C fan/gas 4 and fill a 12 cupcake tray with cases.
-  Using an electric whisk beat 110g softened butter and 110g golden caster sugar together until pale and fluffy then whisk in 2 large eggs, one at a time, scraping down the sides of the bowl after each addition.
-  Add ½ tsp vanilla extract, 110g self-raising flour and a pinch of salt, whisk until just combined then spoon the mixture into the cupcake cases.
-  Bake for 15 mins until golden brown and a skewer inserted into the middle of each cake comes out clean. Leave to cool completely on a wire rack.
-  To make the buttercream, whisk 150g softened butter until super soft then add 300g icing sugar, 1 tsp vanilla extract and a pinch of salt.
-  Whisk together until smooth (start off slowly to avoid an icing sugar cloud) then beat in 3 tbsp milk.
-  If wanting to colour, stir in the food colouring now. Spoon or pipe onto the cooled cupcakes.`,
+  instructions: [
+    `Heat oven to 180C/160C fan/gas 4 and fill a 12 cupcake tray with cases.`,
+    `Using an electric whisk beat 110g softened butter and 110g golden caster sugar together until pale and fluffy then whisk in 2 large eggs, one at a time, scraping down the sides of the bowl after each addition.`,
+    `Add ½ tsp vanilla extract, 110g self-raising flour and a pinch of salt, whisk until just combined then spoon the mixture into the cupcake cases.`,
+    `Bake for 15 mins until golden brown and a skewer inserted into the middle of each cake comes out clean. Leave to cool completely on a wire rack.`,
+    `To make the buttercream, whisk 150g softened butter until super soft then add 300g icing sugar, 1 tsp vanilla extract and a pinch of salt.`,
+    `Whisk together until smooth (start off slowly to avoid an icing sugar cloud) then beat in 3 tbsp milk.`,
+    `If wanting to colour, stir in the food colouring now. Spoon or pipe onto the cooled cupcakes.`,
+  ],
   diets: ["Lacto ovo vegetarian"],
 };
 
@@ -34,7 +36,12 @@ const recipe3 = {
   name: "Vegan banana ice cream",
   summary: "The beauty of this ice cream is that it’s good enough to just have it on its own, if you like bananas that is. And it’s so pure and natural that I imagine it will go down well with your teething toddler too, not that I’m an expert on kids, mind you.",
   healthScore: 100,
-  instructions: `Place frozen banana slices in a food processor and blend until smooth. Initially, the mixture will be a bit crumbly but if you persevere it will soon (5 minutes tops) change into smooth and super creamy banana ice-cream. If you are after a soft serve, consume immediately. Otherwise, place smooth banana mixture in a freezer-friendly box and freeze until solid. Let it thaw for a few minutes before scooping.`,
+  instructions: [
+    `Place frozen banana slices in a food processor and blend until smooth.`,
+    `Initially, the mixture will be a bit crumbly but if you persevere it will soon (5 minutes tops) change into smooth and super creamy banana ice-cream.`,
+    `If you are after a soft serve, consume immediately. Otherwise, place smooth banana mixture in a freezer-friendly box and freeze until solid.`,
+    `Let it thaw for a few minutes before scooping.`,
+  ],
   diets: ["Gluten free", "Lacto ovo vegetarian", "Vegan", "Fodmap friendly"],
 };
 

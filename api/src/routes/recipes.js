@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllInfo } = require('../controllers/index.js')
+const { getAllInfo, formatDiets } = require('../controllers/index.js')
 const { Diet, Recipe } = require('../db.js')
 
 const router = Router();
@@ -43,18 +43,17 @@ router.get('/:id', async (req, res) => {
 /* POST /recipes */
 router.post('/', async (req, res) => {
   try {
-    req.body.name = req.body.name[0].toUpperCase() + req.body.name.slice(1)
-    req.body.instructions = req.body.instructions ? req.body.instructions : null
-    req.body.image = req.body.image ? req.body.image : 'https://static.educalingo.com/img/en/800/food.jpg'
-    const { name, summary, diets } = req.body
-    
-    if (name && summary) {
+    if (req.body.name && req.body.summary) {
+      req.body.name = req.body.name[0].toUpperCase() + req.body.name.slice(1)
+      req.body.instructions = req.body.instructions ? req.body.instructions : null
+      req.body.image = req.body.image ? req.body.image : 'https://static.educalingo.com/img/en/800/food.jpg'
+      const { name, diets } = req.body
       const recipeAux = await Recipe.create(req.body)
       const dietsAux = await Diet.findAll({
         where: { name: diets }
       })
       await recipeAux.addDiet(dietsAux)
-      const newRecipe = await Recipe.findOne({
+      const [newRecipe] = formatDiets([await Recipe.findOne({
         where: { name },
         include: {
           model: Diet,
@@ -63,7 +62,7 @@ router.post('/', async (req, res) => {
             attributes: []
           }
         }
-      })
+      })])
       // console.log('POST newRecipe:',newRecipe);
       res.status(201).json({ 
         message: "Recipe submitted! \nIf you don't see any changes, please refresh the page.",
@@ -114,7 +113,7 @@ router.put('/:id/edit', async (req, res) => {
         })
         await editableRecipe.setDiets(dietsBody)
       }
-      const editedRecipe = await Recipe.findByPk(id, {
+      const [editedRecipe] = formatDiets([await Recipe.findByPk(id, {
         include: {
           model: Diet,
           attributes: ['name'],
@@ -122,7 +121,7 @@ router.put('/:id/edit', async (req, res) => {
             attributes: []
           }
         }
-      })
+      })])
       // console.log('PUT editedRecipe:', editedRecipe);
       res.status(200).json({
         message: "The recipe was successfully edited! \nIf you don't see any changes, please refresh the page.",

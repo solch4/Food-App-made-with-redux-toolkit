@@ -6,7 +6,6 @@ import backArrow from '../../assets/back-arrow.svg'
 import Detail404 from '../Detail404/Detail404';
 import { detailDiv, container, backBtn, body, img, title, category, subtitle, deleteEditBtnsContainer, deleteBtn, editBtn, p, imgFavBtnContainer, favBtn } from './Detail.module.css'
 
-//la info proveniente de la api y de la db son tipos de datos distintos, x eso antes de renderizar algunas cosas pregunto si es createdInDB
 function Detail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -88,18 +87,19 @@ function Detail() {
             <h1 className={title}>{name}</h1>
             {healthScore && <h4>Health score: {healthScore}%</h4>}
 
-            {(!createdInDB && !!diets.length) && <p className={p}><span className={category}>Diets: </span>{diets}</p>}
-            {(createdInDB && !!diets.length) && <p className={p}><span className={category}>Diets: </span>{diets.map(d => Object.values(d)).join(', ')}</p>}
+            {!!diets.length && <p className={p}><span className={category}>Diets: </span>{diets}</p>}
 
             {dishTypes && <p><span className={category}>Dish type: </span>{dishTypes}</p>}
 
             <h2 className={subtitle}>Summary</h2>
             <p className={p}>{summary?.replace(/<[^>]*>/g, '')}</p> {/* replace para eliminar las etiquetas fieras q me trae la api */}
 
-            {instructions && <h2 className={subtitle}>Instructions</h2>}
-            {createdInDB 
-              ? <p className={p}>{instructions}</p>
-              : instructions?.map((inst, n) => <p  className={p} key={n}><span className={category}>Step {n+1}: </span>{inst}</p>)}
+            {!!instructions?.length && (
+              <>
+                <h2 className={subtitle}>Instructions</h2>
+                {instructions.map((inst, n) => <p className={p} key={n}><span className={category}>Step {n+1}: </span>{inst}</p>)}
+              </>
+            )}
             
             {createdInDB &&
               <div className={deleteEditBtnsContainer}>

@@ -20,7 +20,7 @@ const getApiInfo = async () => {
 }
 
 const getDBInfo = async () => {
-  return await Recipe.findAll({
+  const dbInfo = await Recipe.findAll({
     include: {
       model: Diet,
       attributes: ['name'],
@@ -29,6 +29,19 @@ const getDBInfo = async () => {
       }
     }
   })
+  const dbInfoWithDiets = formatDiets(dbInfo)
+  return dbInfoWithDiets
+}
+
+const formatDiets = (json) => {
+  const dbInfoParsed = JSON.parse(JSON.stringify(json, null, 2))
+  const dbInfoWithDiets = dbInfoParsed.map(r => {
+    return {
+      ...r,
+      diets: r.diets.map(diet => diet.name[0].toUpperCase() + diet.name.slice(1)).join(', '),
+    }
+  })
+  return dbInfoWithDiets
 }
 
 const getAllInfo = async () => {
@@ -41,5 +54,6 @@ const getAllInfo = async () => {
 module.exports = {
   getApiInfo,
   getDBInfo,
-  getAllInfo
+  getAllInfo,
+  formatDiets,
 }

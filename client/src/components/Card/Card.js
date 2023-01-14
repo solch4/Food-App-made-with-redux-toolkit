@@ -29,9 +29,7 @@ function Card ({ id, image, name, diets, healthScore, createdInDB }) {
 
       <div className={body}>
         <h3 className={title}>{name}</h3>
-        {createdInDB
-          ? <p className={diet}>{diets.map(d => Object.values(d)).join(', ')}</p>
-          : <p className={diet}>{diets}</p>}
+        <p className={diet}>{diets}</p>
       </div>
     </Link>
   );
