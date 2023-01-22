@@ -9,13 +9,13 @@ function Pagination({ recipesPerPage, pages }) {
   const { actualPage, minPageNumber, maxPageNumber } = useSelector(state => state.pagination)
 
   const arrPageNumbers = [];
-  //pregunto si es un array para tener una sola pág cuando tenga el string de recipe not found
-  const nOfPages = Math.ceil((Array.isArray(recipes) ? recipes.length : 1) / recipesPerPage);
+  // pregunto recipes.length para tener una sola pág cuando esté cargando o no haya recipes que coincidan con la búsqueda
+  const nOfPages = Math.ceil((recipes.length || 1) / recipesPerPage);
   for (let i = 1; i <= nOfPages; i++) arrPageNumbers.push(i);
 
-  //condicion para q no rompa al querer volver a una pag q no existe
+  // condicion para q no rompa al querer volver a una pag q no existe
   const handlePrev = () => (actualPage-1) && pages(actualPage - 1)
-  //condicion para q no rompa al querer avanzar a una pag q no existe
+  // condicion para q no rompa al querer avanzar a una pag q no existe
   const handleNext = () => (actualPage!==arrPageNumbers.length) && pages(actualPage + 1)
 
   return (

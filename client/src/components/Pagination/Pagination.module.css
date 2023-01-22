@@ -16,8 +16,7 @@
   transition: 0.1s;
 }
 
-.pagination>*:hover,
-.pagination>*:focus {
+.pagination>*:hover {
   background-color: var(--clr-dark-main);
 }
 

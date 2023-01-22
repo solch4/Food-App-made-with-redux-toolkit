@@ -9,25 +9,46 @@ const initialState = {
   // allRecipes es solo para aplicar los filtros allí, es una copia de recipes
   allRecipes: [],
   detail: [],
+  loading: false,
+  error: '',
 };
 
 export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
+    loadingRecipes: (state, action) => {
+      state.recipes = [];
+      state.loading = true;
+    },
     getRecipes: (state, action) => {
       state.allRecipes = action.payload;
       state.recipes = action.payload;
+      state.loading = false;
+      state.error = '';
     },
-    searchByName: (state, action) => {
+    searchByNameSuccess: (state, action) => {
       state.recipes = action.payload;
+      state.loading = false;
+      state.error = '';
     },
-    searchByHS: (state, action) => {
+    searchByNameError: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    searchByHSSuccess: (state, action) => {
       state.recipes = action.payload;
+      state.loading = false;
+      state.error = '';
+    },
+    searchByHSError: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
     filterByDiet: (state, action) => {
       const filteredRecipes = action.payload === 'all' ? state.allRecipes : state.allRecipes.filter(recipe => recipe.diets.includes(action.payload))
       state.recipes = filteredRecipes
+      state.error = '';
     },
     sortByName: (state, action) => {
       if (!Array.isArray(state.recipes)) return { ...state } //para q la app no se rompa al intentar ordenar el string not found
@@ -70,6 +91,7 @@ export const recipesSlice = createSlice({
     createRecipe: (state, action) => {
       state.allRecipes.push(action.payload);
       state.recipes = state.allRecipes
+      state.error = ''
     },
     deleteRecipe: (state, action) => {
       const recipesFiltered = state.allRecipes.filter(r => r.id !== action.payload)
@@ -88,6 +110,7 @@ export const recipesSlice = createSlice({
 
 export function getRecipesAsync() {
   return async function (dispatch) {
+    dispatch(loadingRecipes());
     const res = await axios.get(`${baseUrl}/recipes`);
     dispatch(getRecipes(res.data));
   };
@@ -96,10 +119,11 @@ export function getRecipesAsync() {
 export function searchByNameAsync(name) {
   return async function (dispatch) {
     try {
+      dispatch(loadingRecipes());
       const res = await axios.get(`${baseUrl}/recipes?name=${name}`);
-      dispatch(searchByName(res.data));
+      dispatch(searchByNameSuccess(res.data));
     } catch (e) {
-      dispatch(searchByName(e.response.data));
+      dispatch(searchByNameError(e.response.data));
     }
   };
 }
@@ -107,10 +131,11 @@ export function searchByNameAsync(name) {
 export function searchByHSAsync(hs) {
   return async function (dispatch) {
     try {
+      dispatch(loadingRecipes());
       const res = await axios.get(`${baseUrl}/recipes?hs=${hs}`);
-      dispatch(searchByHS(res.data));
+      dispatch(searchByHSSuccess(res.data));
     } catch (e) {
-      dispatch(searchByHS(e.response.data));
+      dispatch(searchByHSError(e.response.data));
     }
   };
 }
@@ -163,9 +188,12 @@ export function editRecipeAsync (payload, id) {
 }
 
 export const {
+  loadingRecipes,
   getRecipes,
-  searchByName,
-  searchByHS,
+  searchByNameSuccess,
+  searchByNameError,
+  searchByHSSuccess,
+  searchByHSError,
   filterByDiet,
   sortByName,
   sortByHealthScore,
