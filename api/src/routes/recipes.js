@@ -7,41 +7,41 @@ const router = Router();
 // '/recipes'
 
 /* GET /recipes?name="..." */
-router.get('/', async (req, res) => {
-  const { name, hs } = req.query
-  const allInfo = await getAllInfo()
-  
-  if (name) {
-    const searchResults = allInfo.filter(recipe => recipe.name.toLowerCase().includes(name.toLowerCase()))
-    searchResults.length 
-      ? res.status(200).json(searchResults)
-      : res.status(404).json('Recipe not found')
-  } else if (hs) {
-    const searchResults = allInfo.filter(recipe => recipe.healthScore == hs)
-    searchResults.length 
-      ? res.status(200).json(searchResults)
-      : res.status(404).json(`Recipe not found`)
+router.get('/', async (req, res, next) => {
+  try {
+    const { name, hs } = req.query
+    const allInfo = await getAllInfo()
+    
+    if (name) {
+      const searchResults = allInfo.filter(recipe => recipe.name.toLowerCase().includes(name.toLowerCase()))
+      if (searchResults.length) return res.status(200).json(searchResults)
+      else throw new Error('Recipe not found')
+    } else if (hs) {
+      const searchResults = allInfo.filter(recipe => recipe.healthScore == hs)
+      if (searchResults.length) return res.status(200).json(searchResults)
+      else throw new Error('Recipe not found')
+    } else res.status(200).json(allInfo)
+  } catch (error) {
+    next(error);
   }
-  else res.status(200).json(allInfo)
 })
 
 /* GET /recipes/{idReceta} */
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const id = req.params.id
-    const allInfo = await getAllInfo()
-    const detail = allInfo.find(recipe => recipe.id == id)
-    detail
-      ? res.status(200).json(detail)
-      : res.status(404).json('Recipe not found')
-  } catch (e) {
-    console.log('error get /recipes/:id', e);
-    res.status(400).json('Something went wrong')
+    const { id } = req.params;
+    const allInfo = await getAllInfo();
+    const detail = allInfo.find((recipe) => recipe.id == id);
+
+    if (detail) return res.status(200).json(detail);
+    else throw new Error("Recipe not found");
+  } catch (error) {
+    next(error);
   }
 })
 
 /* POST /recipes */
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     if (req.body.name && req.body.summary) {
       req.body.name = req.body.name[0].toUpperCase() + req.body.name.slice(1)
@@ -68,17 +68,15 @@ router.post('/', async (req, res) => {
         message: "Recipe submitted! \nIf you don't see any changes, please refresh the page.",
         newRecipe
       })
-    } else res.status(400).json('Error 400: Bad request')
-    
-  } catch (e) {
-    console.log('error post', e);
-    res.status(400).json('Error: Something went wrong')
+    } else throw new Error("Name and/or summary missing");
+  } catch (error) {
+    next(error)
   }
 })
 
 /* DELETE /recipes/{idReceta} */
-router.delete('/:id', async (req, res) => {
-  const id = req.params.id
+router.delete('/:id', async (req, res, next) => {
+  const { id } = req.params
   try {
     if (id) {
       const deleteRecipe = await Recipe.findByPk(id)
@@ -88,16 +86,15 @@ router.delete('/:id', async (req, res) => {
           message: 'The recipe was successfully deleted',
           id
         })
-      } else res.status(404).json('ERROR: Recipe ID not found')
-    } else res.status(400).json('ERROR: Something went wrong')
-  } catch (e) {
-    console.log('Error DELETE', e);
-    res.status(400).json('ERROR: Recipe ID is wrong')
+      } else throw new Error('Recipe ID not found')
+    } else throw new Error('Something went wrong')
+  } catch (error) {
+    next(error)
   }
 })
 
 /* PUT /recipes/{idReceta}/edit */
-router.put('/:id/edit', async (req, res) => {
+router.put('/:id/edit', async (req, res, next) => {
   const { id } = req.params
   try {
     const editableRecipe = await Recipe.findByPk(id)    
@@ -127,11 +124,9 @@ router.put('/:id/edit', async (req, res) => {
         message: "The recipe was successfully edited! \nIf you don't see any changes, please refresh the page.",
         editedRecipe
       })
-    } else res.status(404).json('Error: Recipe ID not found')
-    
-  } catch (e) {
-    console.log('ERROR PUT:', e);
-    res.status(400).json('Error: Recipe ID is wrong')
+    } else throw new Error('Recipe ID not found')
+  } catch (error) {
+    next(error)
   }
 })
 
