@@ -7,7 +7,7 @@ import cross from "../../assets/fork-and-knife-in-cross.svg";
 import { container, noFavs } from './Favorites.module.css'
 
 function Favorites() {
-  const storage = JSON.parse(localStorage.getItem("favorites"));
+  const { favorites } = useSelector(state => state.recipes);
   const { scrollY } = useSelector(state => state.ux)
 
   useEffect(()=> {
@@ -19,10 +19,8 @@ function Favorites() {
     <>
       <Nav />
       <div className={container}>
-        {storage ? (
-          storage.map(fav => (
-            <Card key={fav.id} id={fav.id} image={fav.image} name={fav.name} diets={fav.diets} healthScore={fav.healthScore} createdInDB={fav.createdInDB} />
-          ))
+        {favorites.length ? (
+          favorites.map((fav) => <Card key={fav.id} {...fav} />)
         ) : (
           <div className={noFavs}>
             <img height={150} src={cross} alt="Fork and knife in cross" />

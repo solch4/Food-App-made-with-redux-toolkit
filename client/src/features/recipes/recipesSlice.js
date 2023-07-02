@@ -14,6 +14,9 @@ const initialState = {
   recipes: [],
   // allRecipes es solo para aplicar los filtros allí, es una copia de recipes
   allRecipes: [],
+  favorites: localStorage.getItem("favorites")
+    ? JSON.parse(localStorage.getItem("favorites"))
+    : [],
   detail: [],
   loading: false,
   error: "",
@@ -67,6 +70,18 @@ export const recipesSlice = createSlice({
     },
     clearDetail: (state, action) => {
       state.detail = [];
+    },
+    addFavoriteRecipe: (state, action) => {
+      const newFavorites = [...state.favorites, action.payload];
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      state.favorites = newFavorites;
+    },
+    deleteFavoriteRecipe: (state, action) => {
+      const favoritesFiltered = state.favorites.filter(
+        (recipe) => recipe.id !== action.payload.id
+      );
+      localStorage.setItem("favorites", JSON.stringify(favoritesFiltered));
+      state.favorites = favoritesFiltered;
     },
   },
   extraReducers: (builder) => {
@@ -145,7 +160,13 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { filterByDiet, sortByName, sortByHealthScore, clearDetail } =
-  recipesSlice.actions;
+export const {
+  filterByDiet,
+  sortByName,
+  sortByHealthScore,
+  clearDetail,
+  addFavoriteRecipe,
+  deleteFavoriteRecipe,
+} = recipesSlice.actions;
 
 export default recipesSlice.reducer;
