@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getRecipesAsync, createRecipeAsync } from '../../features/recipes/recipesSlice';
-import { getDietsAsync } from '../../features/diets/dietsSlice';
+import { getRecipesAsync, createRecipeAsync } from '../../features/recipes/recipesActions';
+import { getDietsAsync } from '../../features/diets/dietsActions';
 
 import backArrow from '../../assets/back-arrow.svg'
 import { formDiv, formContainer, backBtn, title, subtitle, form, obligatory, category, error, dietContainer, item, deleteBtn, submitBtn, submitBtnDISABLED } from './CreateRecipe.module.css'

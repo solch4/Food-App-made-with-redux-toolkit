@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { saveScrollY } from '../../features/ux/uxSlice';
-import { searchByNameAsync, searchByHSAsync } from '../../features/recipes/recipesSlice';
+import { searchByNameAsync, searchByHSAsync } from '../../features/recipes/recipesActions';
 import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { searchBar, input, btn } from './SearchBar.module.css'
 

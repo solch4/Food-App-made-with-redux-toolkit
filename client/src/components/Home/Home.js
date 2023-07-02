@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getRecipesAsync } from '../../features/recipes/recipesSlice';
-import { getDietsAsync } from '../../features/diets/dietsSlice';
+import { getRecipesAsync } from '../../features/recipes/recipesActions';
+import { getDietsAsync } from '../../features/diets/dietsActions';
 import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { saveScrollY, setFilterSelectValue, setSortSelectValue } from '../../features/ux/uxSlice';
 import Filter from '../Filter/Filter';
