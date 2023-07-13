@@ -1,6 +1,5 @@
 .searchBar {
   position: relative;
-  padding-bottom: .75rem;
 }
 
 .input {
@@ -46,10 +45,4 @@
   height: 10px;
   background: var(--clr-dark-grey);
   transform: translate(5px,5px) rotate(315deg);
-}
-
-@media (min-width: 570px) {
-  .searchBar {
-    padding: 0;
-  }
 }

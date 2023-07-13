@@ -1,21 +1,14 @@
-.App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .homeContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 1.5rem;
+  padding: 1rem;
 }
 
 .menuContainer {
-  margin-top: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   gap: 1rem;
 }
 
@@ -63,30 +56,26 @@
 
 @media (min-width: 850px) {
   .homeContainer {
-    margin-top: 5.4rem;
-    /* display: grid;
-    grid-template-columns: .25fr 1fr; */
-    position: relative;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 0;
+    padding: 0;
   }
   .menuContainer {
-    margin-top: 5.35rem;
-    top: 0;
-    bottom: 0;
     background: var(--clr-grey);
-    position: fixed;
-    width: 30%;
-    justify-content: flex-start;
-    padding: 2rem 1rem;
-    gap: 2rem;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 100vh;
+    margin-top: -5.35rem;
   }
   .sortFilter {
     flex-direction: column;
     gap: 1.5rem;
   }
-  .cardContainer {
-    position: absolute;
-    right: 0;
-    width: 70%;
+  .cardsContainer {
+    grid-column: span 3/span 3;
+    padding: 1.5rem;
   }
 }
 

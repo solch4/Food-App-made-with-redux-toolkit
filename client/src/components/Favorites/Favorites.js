@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Card from "../Card/Card";
+import Cards from "../Cards/Cards";
 import Nav from "../Nav/Nav";
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton'
 import cross from "../../assets/fork-and-knife-in-cross.svg";
@@ -20,7 +20,7 @@ function Favorites() {
       <Nav />
       <div className={container}>
         {favorites.length ? (
-          favorites.map((fav) => <Card key={fav.id} {...fav} />)
+          <Cards actualRecipes={favorites} />
         ) : (
           <div className={noFavs}>
             <img height={150} src={cross} alt="Fork and knife in cross" />

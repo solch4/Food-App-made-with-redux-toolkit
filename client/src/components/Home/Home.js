@@ -11,7 +11,7 @@ import Pagination from '../Pagination/Pagination';
 import Nav from '../Nav/Nav';
 import Cards from '../Cards/Cards';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
-import { App, homeContainer, menuContainer, sortFilter, refreshBtn, createRecipe } from './Home.module.css'
+import { homeContainer, menuContainer, sortFilter, refreshBtn, createRecipe, cardsContainer } from './Home.module.css'
 
 function Home() {
   const { scrollY } = useSelector(state => state.ux)
@@ -31,19 +31,20 @@ function Home() {
     //al cambiar de pág scrolleo hasta el inicio
     window.scrollTo(0, 0)
     dispatch(setActualPage(pageNumber))
+    const number = 3
     if(pageNumber >= maxPageNumber) {
-      dispatch(setMinPageNumber(minPageNumber+4))
-      dispatch(setMaxPageNumber(maxPageNumber+4))
+      dispatch(setMinPageNumber(minPageNumber+number))
+      dispatch(setMaxPageNumber(maxPageNumber+number))
     } else if(pageNumber <= minPageNumber+1 && pageNumber !== 1) {
-      dispatch(setMinPageNumber(minPageNumber-4))
-      dispatch(setMaxPageNumber(maxPageNumber-4))
+      dispatch(setMinPageNumber(minPageNumber-number))
+      dispatch(setMaxPageNumber(maxPageNumber-number))
     }
   };
 
   const handleRefresh = () => {
     dispatch(setActualPage(1))
     dispatch(setMinPageNumber(0))
-    dispatch(setMaxPageNumber(5)  )
+    dispatch(setMaxPageNumber(4))
     dispatch(getRecipesAsync())
     dispatch(setSortSelectValue('DEFAULT'))
     dispatch(setFilterSelectValue('DEFAULT'))
@@ -62,7 +63,7 @@ function Home() {
   }, [dispatch, allRecipes, scrollY])
 
   return (
-    <div className={App}>
+    <>
       <Nav />
       <div className={homeContainer}>
         
@@ -81,10 +82,12 @@ function Home() {
           <Pagination recipesPerPage={recipesPerPage} pages={pages} />
         </div>
         
-        <Cards actualRecipes={actualRecipes} />
+        <div className={cardsContainer}>
+          <Cards actualRecipes={actualRecipes} />
+        </div>
       </div>
       <ScrollToTopButton />
-    </div>
+    </>
   );
 }
 
