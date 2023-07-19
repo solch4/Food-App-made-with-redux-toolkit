@@ -13,9 +13,7 @@ function Detail() {
   const { id } = useParams()
   const { detail, favorites } = useSelector(state => state.recipes)
   const { image, name, diets, healthScore, summary, instructions, dishTypes, createdInDB } = detail
-  const isRecipeInFavorites = favorites.find(
-    (recipe) => recipe.id === Number(id)
-  );
+  const isRecipeInFavorites = favorites.find((recipe) => recipe.id == id);
 
   const handleGoBack = () => navigate(-1)
 
