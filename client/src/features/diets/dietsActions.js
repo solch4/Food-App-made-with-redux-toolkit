@@ -7,10 +7,12 @@ export const getDietsAsync = createAsyncThunk(
   "diets/getDietsAsync",
   async () => {
     try {
-      const { data } = await axios.get(`${baseUrl}/diets`);
+      const res = await axios.get(`${baseUrl}/diets`);
+      const { data } = res.data;
       return data;
     } catch (error) {
-      throw new Error(error.response.data);
+      const { message } = error.response.data;
+      throw new Error(message);
     }
   }
 );

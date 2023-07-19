@@ -1,22 +1,21 @@
 const { getAllInfo, formatDiets } = require("../helpers");
 const { Diet, Recipe } = require("../db.js");
-const { catchedAsync } = require("../utils");
+const { catchedAsync, response } = require("../utils");
+const { ClientError } = require("../utils/errors");
 
 const getRecipes = async (req, res) => {
   const { name, hs } = req.query;
   const allInfo = await getAllInfo();
 
-  if (name) {
-    const searchResults = allInfo.filter((recipe) =>
-      recipe.name.toLowerCase().includes(name.toLowerCase())
-    );
-    if (searchResults.length) return res.status(200).json(searchResults);
-    else throw new Error("Recipe not found");
-  } else if (hs) {
-    const searchResults = allInfo.filter((recipe) => recipe.healthScore == hs);
-    if (searchResults.length) return res.status(200).json(searchResults);
-    else throw new Error("Recipe not found");
-  } else res.status(200).json(allInfo);
+  if (name || hs) {
+    const searchResults = allInfo.filter((recipe) => {
+      if (name) return recipe.name.toLowerCase().includes(name.toLowerCase());
+      else if (hs) return recipe.healthScore == hs;
+    });
+
+    if (searchResults.length) return response(res, 200, searchResults);
+    else throw new ClientError("Recipe not found", 404);
+  } else response(res, 200, allInfo);
 };
 
 const getRecipeById = async (req, res) => {
@@ -24,8 +23,8 @@ const getRecipeById = async (req, res) => {
   const allInfo = await getAllInfo();
   const detail = allInfo.find((recipe) => recipe.id == id);
 
-  if (detail) return res.status(200).json(detail);
-  else throw new Error("Recipe not found");
+  if (detail) return response(res, 200, detail);
+  else throw new ClientError("Recipe not found", 404);
 };
 
 const postRecipe = async (req, res) => {
@@ -56,12 +55,12 @@ const postRecipe = async (req, res) => {
       }),
     ]);
     // console.log('POST newRecipe:',newRecipe);
-    res.status(201).json({
+    response(res, 201, {
       message:
         "Recipe submitted! \nIf you don't see any changes, please refresh the page.",
       newRecipe,
     });
-  } else throw new Error("Name and/or summary missing");
+  } else throw new ClientError("Name and/or summary missing");
 };
 
 const deleteRecipe = async (req, res) => {
@@ -70,12 +69,9 @@ const deleteRecipe = async (req, res) => {
     const deleteRecipe = await Recipe.findByPk(id);
     if (deleteRecipe) {
       await deleteRecipe.destroy();
-      res.status(200).json({
-        message: "The recipe was successfully deleted",
-        id,
-      });
-    } else throw new Error("Recipe ID not found");
-  } else throw new Error("Something went wrong");
+      response(res, 200, "The recipe was successfully deleted");
+    } else throw new ClientError("Recipe ID not found", 404);
+  } else throw new ClientError("Something went wrong");
 };
 
 const editeRecipe = async (req, res) => {
@@ -107,12 +103,12 @@ const editeRecipe = async (req, res) => {
       }),
     ]);
     // console.log('PUT editedRecipe:', editedRecipe);
-    res.status(200).json({
+    response(res, 200, {
       message:
         "The recipe was successfully edited! \nIf you don't see any changes, please refresh the page.",
       editedRecipe,
     });
-  } else throw new Error("Recipe ID not found");
+  } else throw new ClientError("Recipe ID not found", 404);
 };
 
 module.exports = {

@@ -1,10 +1,11 @@
 const { Diet } = require("../db.js");
-const { catchedAsync } = require("../utils");
+const { catchedAsync, response } = require("../utils");
+const { ClientError } = require("../utils/errors");
 
 const getDiets = async (req, res) => {
   const allDiets = await Diet.findAll();
-  if (allDiets.length) return res.status(200).json(allDiets);
-  else throw new Error("Diets not found");
+  if (allDiets.length) return response(res, 200, allDiets);
+  else throw new ClientError("Diets not found", 404);
 };
 
 module.exports = {

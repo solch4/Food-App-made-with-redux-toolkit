@@ -7,10 +7,12 @@ export const getRecipesAsync = createAsyncThunk(
   "recipes/getRecipesAsync",
   async () => {
     try {
-      const { data } = await axios.get(`${baseUrl}/recipes`);
+      const res = await axios.get(`${baseUrl}/recipes`);
+      const { data } = res.data;
       return data;
     } catch (error) {
-      throw new Error(error.response.data);
+      const { message } = error.response.data;
+      throw new Error(message);
     }
   }
 );
@@ -19,10 +21,12 @@ export const searchByNameAsync = createAsyncThunk(
   "recipes/searchByNameAsync",
   async (name) => {
     try {
-      const { data } = await axios.get(`${baseUrl}/recipes?name=${name}`);
+      const res = await axios.get(`${baseUrl}/recipes?name=${name}`);
+      const { data } = res.data;
       return data;
     } catch (error) {
-      throw new Error(error.response.data);
+      const { message } = error.response.data;
+      throw new Error(message);
     }
   }
 );
@@ -31,10 +35,12 @@ export const searchByHSAsync = createAsyncThunk(
   "recipes/searchByHSAsync",
   async (hs) => {
     try {
-      const { data } = await axios.get(`${baseUrl}/recipes?hs=${hs}`);
+      const res = await axios.get(`${baseUrl}/recipes?hs=${hs}`);
+      const { data } = res.data;
       return data;
     } catch (error) {
-      throw new Error(error.response.data);
+      const { message } = error.response.data;
+      throw new Error(message);
     }
   }
 );
@@ -43,25 +49,28 @@ export const getDetailAsync = createAsyncThunk(
   "recipes/getDetailAsync",
   async (id) => {
     try {
-      const { data } = await axios.get(`${baseUrl}/recipes/${id}`);
+      const res = await axios.get(`${baseUrl}/recipes/${id}`);
+      const { data } = res.data;
       return data;
     } catch (error) {
-      throw new Error(error.response.data);
+      const { message } = error.response.data;
+      throw new Error(message);
     }
   }
 );
 
 export const createRecipeAsync = createAsyncThunk(
   "recipes/createRecipeAsync",
-  async (newRecipe) => {
+  async (recipe) => {
     try {
-      const { data } = await axios.post(`${baseUrl}/recipes`, newRecipe);
-      alert(data.message);
-      return data.newRecipe;
+      const res = await axios.post(`${baseUrl}/recipes`, recipe);
+      const { message, newRecipe } = res.data.data;
+      alert(message);
+      return newRecipe;
     } catch (error) {
-      const errorMessage = error.response.data;
-      alert(`Error: ${errorMessage}`);
-      throw new Error(errorMessage);
+      const { message } = error.response.data;
+      alert(`Error: ${message}`);
+      throw new Error(message);
     }
   }
 );
@@ -70,13 +79,14 @@ export const deleteRecipeAsync = createAsyncThunk(
   "recipes/deleteRecipeAsync",
   async (id) => {
     try {
-      const { data } = await axios.delete(`${baseUrl}/recipes/${id}`);
-      alert(data.message);
-      return data.id;
+      const res = await axios.delete(`${baseUrl}/recipes/${id}`);
+      const message = res.data.data;
+      alert(message);
+      return id;
     } catch (error) {
-      const errorMessage = error.response.data;
-      alert(`Error: ${errorMessage}`);
-      throw new Error(errorMessage);
+      const { message } = error.response.data;
+      alert(`Error: ${message}`);
+      throw new Error(message);
     }
   }
 );
@@ -85,16 +95,17 @@ export const editRecipeAsync = createAsyncThunk(
   "recipes/editRecipeAsync",
   async ({ id, ...payload }) => {
     try {
-      const { data } = await axios.put(
+      const res = await axios.put(
         `${baseUrl}/recipes/${id}/edit`,
         payload
       );
-      alert(data.message);
-      return data.editedRecipe;
+      const { message, editedRecipe } = res.data.data;
+      alert(message);
+      return editedRecipe;
     } catch (error) {
-      const errorMessage = error.response.data;
-      alert(`Error: ${errorMessage}`);
-      throw new Error(errorMessage);
+      const { message } = error.response.data;
+      alert(`Error: ${message}`);
+      throw new Error(message);
     }
   }
 );
