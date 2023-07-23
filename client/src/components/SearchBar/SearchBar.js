@@ -22,7 +22,7 @@ function SearchBar() {
 
     dispatch(setActualPage(1))
     dispatch(setMinPageNumber(0))
-    dispatch(setMaxPageNumber(5))
+    dispatch(setMaxPageNumber(4))
     setSearchInput('')
 
     //si estoy en /favorites vuelvo al /home

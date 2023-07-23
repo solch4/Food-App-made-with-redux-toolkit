@@ -103,6 +103,7 @@ export const recipesSlice = createSlice({
       // searchByNameAsync
       .addCase(searchByNameAsync.pending, (state) => {
         state.loading = true;
+        state.recipes = [];
       })
       .addCase(searchByNameAsync.fulfilled, (state, action) => {
         state.recipes = action.payload;
@@ -116,6 +117,7 @@ export const recipesSlice = createSlice({
       // searchByHSAsync
       .addCase(searchByHSAsync.pending, (state) => {
         state.loading = true;
+        state.recipes = [];
       })
       .addCase(searchByHSAsync.fulfilled, (state, action) => {
         state.recipes = action.payload;
