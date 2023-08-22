@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { getRecipesAsync } from '../../features/recipes/recipesActions';
-import { getDietsAsync } from '../../features/diets/dietsActions';
 import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { saveScrollY, setFilterSelectValue, setSortSelectValue } from '../../features/ux/uxSlice';
+import { useRecipes } from '../../hooks';
 import Filter from '../Filter/Filter';
 import Sort from '../Sort/Sort';
 import Pagination from '../Pagination/Pagination';
@@ -15,7 +15,7 @@ import { homeContainer, menuContainer, sortFilter, refreshBtn, createRecipe, car
 
 function Home() {
   const { scrollY } = useSelector(state => state.ux)
-  const { allRecipes, recipes } = useSelector(state => state.recipes)
+  const { recipes } = useRecipes();
   const dispatch = useDispatch()
   const [, setSort] = useState('') //este state sólo sirve para re-renderizar la pág cuando hacemos un sort
 
@@ -54,13 +54,9 @@ function Home() {
   }
 
   useEffect(() => {
-    //dispacho la action solo si mi estado está vacío (cuando entro x 1ra vez a la pag)
-    !allRecipes.length && dispatch(getRecipesAsync())
-    dispatch(getDietsAsync())
-
     //para volver a la misma parte de la pág q quedó el usuario antes de ver el detail
     window.scrollTo(0, scrollY)
-  }, [dispatch, allRecipes, scrollY])
+  }, [scrollY])
 
   return (
     <>

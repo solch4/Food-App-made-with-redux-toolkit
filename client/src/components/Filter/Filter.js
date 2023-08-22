@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterByDiet } from '../../features/recipes/recipesSlice';
 import { setActualPage, setMaxPageNumber, setMinPageNumber } from '../../features/pagination/paginationSlice';
 import { setFilterSelectValue } from '../../features/ux/uxSlice';
+import { useDiets } from '../../hooks';
 import { filterContainer, title } from './Filter.module.css'
 
 function Filter() {
   const dispatch = useDispatch()
-  const { diets } = useSelector(state => state.diets)
+  const { diets } = useDiets();
   const { filterSelectValue } = useSelector(state => state.ux)
 
   const handleFilterByDiet = (e) => {
