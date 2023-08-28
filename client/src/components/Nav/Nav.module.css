@@ -55,3 +55,9 @@
     font-weight: 900;
   }
 }
+
+@media (min-width: 850px){
+  .nav {
+    padding-inline: 1.5rem;
+  }
+}
